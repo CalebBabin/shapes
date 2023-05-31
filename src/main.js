@@ -1,7 +1,7 @@
 import { createNoise3D } from 'simplex-noise';
 import './main.css';
 
-const noise3D = createNoise3D();
+const noise3D = createNoise3D(Math.sin);
 
 const canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
@@ -36,7 +36,7 @@ function draw() {
 	ctx.beginPath();
 	const circleRadius = Math.min(cx, cy) * 0.1;
 	const circlePoints = 64;
-	const t = performance.now() * 0.0001;
+	const t = Date.now() * 0.00015;
 	for (let i = 0; i < circlePoints; i++) {
 		const angle = i / circlePoints * Math.PI * 2;
 		let x = cx + Math.cos(angle) * circleRadius;
