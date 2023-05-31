@@ -59,3 +59,11 @@ function draw() {
 }
 
 draw();
+
+
+const params = new URLSearchParams(window.location.search);
+if (params.has('refresh')) {
+	setTimeout(() => {
+		window.location.reload();
+	}, 1000 * 60 * 10);
+}
