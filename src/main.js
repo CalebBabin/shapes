@@ -1,6 +1,18 @@
 import { createNoise3D } from 'simplex-noise';
 import './main.css';
 
+
+const params = new URLSearchParams(window.location.search);
+if (params.has('refresh')) {
+	setTimeout(() => {
+		window.location.reload();
+	}, 1000 * 60 * 10);
+}
+
+function getPixelRatio () {
+	return Number(params.get('pixelRatio')) || window.devicePixelRatio || 1;
+}
+
 const noise3D = createNoise3D(Math.sin);
 
 const canvas = document.createElement('canvas');
@@ -9,8 +21,8 @@ const ctx = canvas.getContext('2d');
 
 
 function resize() {
-	canvas.width = window.innerWidth * window.devicePixelRatio;
-	canvas.height = window.innerHeight * window.devicePixelRatio;
+	canvas.width = window.innerWidth * getPixelRatio();
+	canvas.height = window.innerHeight * getPixelRatio();
 }
 resize();
 window.addEventListener('resize', resize);
@@ -59,11 +71,3 @@ function draw() {
 }
 
 draw();
-
-
-const params = new URLSearchParams(window.location.search);
-if (params.has('refresh')) {
-	setTimeout(() => {
-		window.location.reload();
-	}, 1000 * 60 * 10);
-}
