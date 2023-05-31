@@ -9,7 +9,7 @@ if (params.has('refresh')) {
 	}, 1000 * 60 * 10);
 }
 
-function getPixelRatio () {
+function getPixelRatio() {
 	return Number(params.get('pixelRatio')) || window.devicePixelRatio || 1;
 }
 
@@ -52,12 +52,13 @@ function draw() {
 	const t = Date.now() * 0.00015;
 	for (let i = 0; i < circlePoints; i++) {
 		const angle = i / circlePoints * Math.PI * 2;
-		let x = cx + Math.cos(angle) * circleRadius;
-		let y = cy + Math.sin(angle) * circleRadius;
-		const radiusModifier = noise3D(x * 0.007 + t, y * 0.007 + t, t);
+		let x = Math.cos(angle);
+		let y = Math.sin(angle);
 
-		x += Math.cos(angle) * radiusModifier * circleRadius * 0.1;
-		y += Math.sin(angle) * radiusModifier * circleRadius * 0.1;
+		const radiusModifier = noise3D(x + t, y + t, t);
+
+		x = cx + (x * circleRadius) + (circleRadius * radiusModifier * 0.1);
+		y = cy + (y * circleRadius) + (circleRadius * radiusModifier * 0.1);
 
 		if (i === 0) {
 			ctx.moveTo(x, y);
@@ -67,8 +68,6 @@ function draw() {
 	}
 	ctx.closePath();
 	ctx.stroke();
-
-
 }
 
 draw();
